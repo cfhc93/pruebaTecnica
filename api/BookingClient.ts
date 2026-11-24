@@ -1,16 +1,18 @@
 import { APIRequestContext } from '@playwright/test';
 
 export class BookingClient {
-
     constructor(private request: APIRequestContext) {}
-
-    async createBooking(payload: any) {
-        return await this.request.post('/booking', {
+    async createBooking(payload: any, token: string) {
+        return await this.request.post('/api/booking/', {
+            headers: {
+                Cookie: `token=${token}`
+            },
             data: payload
         });
     }
-
-    async getBooking(bookingId: number) {
-        return await this.request.get(`/booking/${bookingId}`);
+    async getBooking(id: number) {
+        return await this.request.get(
+            `/api/booking/${id}`
+        );
     }
 }
